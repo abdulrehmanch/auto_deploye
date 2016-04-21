@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="noindex">
+	<title>Simple PHP Git deploy script</title>
+	<style>
+body { padding: 0 1em; background: #222; color: #fff; }
+h2, .error { color: #c33; }
+.prompt { color: #6be234; }
+.command { color: #729fcf; }
+.output { color: #999; }
+	</style>
+</head>
+<body>
+<pre>
+
+Checking the environment ...
+
+Running as <b>logicsdr</b>.
+
+<b>/usr/bin/git</b> : git version 1.7.11.3
+<b>/usr/bin/rsync</b> : rsync  version 3.1.0  protocol version 31
+
+Environment OK.
+
+Deploying https://github.com/abdulrehmanch/auto_deploye.git master
+to        /tmp/deployment/ ...
+
+
+<span class="prompt">$</span> <span class="command">git clone --depth=1 --branch master https://github.com/abdulrehmanch/auto_deploye.git /tmp/spgd-d903339674b6eaecf31aa72decd12815/</span>
+<div class="output">Cloning into '/tmp/spgd-d903339674b6eaecf31aa72decd12815'...</div>
+
+<span class="prompt">$</span> <span class="command">git submodule update --init --recursive</span>
+<div class="output"></div>
+
+<span class="prompt">$</span> <span class="command">git --git-dir=&quot;/tmp/spgd-d903339674b6eaecf31aa72decd12815/.git&quot; --work-tree=&quot;/tmp/spgd-d903339674b6eaecf31aa72decd12815/&quot; describe --always &gt; /tmp/spgd-d903339674b6eaecf31aa72decd12815/VERSION</span>
+<div class="output"></div>
+
+<span class="prompt">$</span> <span class="command">rsync -rltgoDzvO /tmp/spgd-d903339674b6eaecf31aa72decd12815/ /tmp/deployment/   --exclude=.git</span>
+<div class="output">sending incremental file list
+New Text Document.txt
+README.md
+VERSION
+test.txt
+test2.txt
+test3.txt
+
+sent 443 bytes  received 130 bytes  1,146.00 bytes/sec
+total size is 28  speedup is 0.05</div>
+
+<span class="prompt">$</span> <span class="command">rm -rf /tmp/spgd-d903339674b6eaecf31aa72decd12815/</span>
+<div class="output"></div>
+
+Done.
+</pre>
+</body>
+</html>
